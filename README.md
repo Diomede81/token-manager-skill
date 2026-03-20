@@ -4,6 +4,19 @@
 
 A searchable registry of API tokens and credentials that prevents agents from incorrectly claiming "I don't have X token" when tokens exist.
 
+## ⚠️ CRITICAL: No Rogue Token Files
+
+**Single Source of Truth:** `config/registry.json`
+
+| ✅ DO | ❌ DON'T |
+|-------|----------|
+| Add tokens via `POST /api/tokens` | Create standalone JSON files (`api-keys.json`, etc.) |
+| Store secrets in `~/.secrets/*.txt` or `*.age` | Put secrets in random locations |
+| Update registry via API or `registry-manager.js` | Write custom token storage code |
+| Query via `/api/search?q=service` | Hardcode token locations elsewhere |
+
+**The registry stores metadata only.** Actual secret values go in `~/.secrets/` files.
+
 ## Features
 
 - 🔍 **Token search** - Find tokens by service name
@@ -326,21 +339,28 @@ curl "http://localhost:3021/api/search?q=github"
 
 If found, use the `location` field to read the actual token.
 
-### Step 3: Add tokens to registry
-When you discover a new token, add it:
+### Step 3: Add tokens to registry (CORRECT WAY)
+When you discover a new token, **ALWAYS use the API**:
 
 ```bash
+# 1. Store the actual secret in ~/.secrets/
+echo "your-api-key-here" > ~/.secrets/service-name-token.txt
+chmod 600 ~/.secrets/service-name-token.txt
+
+# 2. Register the token metadata via API
 curl -X POST http://localhost:3021/api/tokens \
   -H "Content-Type: application/json" \
   -d '{
-    "service": "Sentry",
-    "name": "DSN for Empathika",
+    "service": "ServiceName",
+    "name": "API Key",
     "category": "api",
-    "locationType": "env",
-    "location": "SENTRY_DSN",
-    "envVar": "SENTRY_DSN"
+    "locationType": "file",
+    "location": "~/.secrets/service-name-token.txt"
   }'
 ```
+
+**⚠️ NEVER create standalone JSON files like `api-keys.json` or `custom-tokens.json`!**
+**⚠️ ALWAYS use `POST /api/tokens` to register new tokens!**
 
 ### Step 4: Verify tokens exist
 After adding, verify it's accessible:

@@ -7,6 +7,19 @@ description: Centralized API token registry for managing credentials across serv
 
 Centralized registry for API tokens and credentials with REST API for UI configuration.
 
+## ⚠️ CRITICAL: Single Source of Truth
+
+**ALL token metadata MUST be stored in the JSON registry:**
+- **Location:** `config/registry.json`
+- **API:** Use `POST /api/tokens` to add new tokens
+- **CLI:** Use `npm run search` or `check-token.js` to query
+
+**❌ NEVER create standalone JSON files for tokens** (e.g., `api-keys.json`, `custom-tokens.json`)
+**❌ NEVER store token metadata outside the registry**
+**✅ ALWAYS use the API or registry-manager.js to add/update tokens**
+
+The registry stores **metadata only** (service name, location, status). Actual secrets go in `~/.secrets/` files.
+
 ## Quick Start
 
 ```bash
