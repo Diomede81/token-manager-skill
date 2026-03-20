@@ -303,14 +303,17 @@ app.get('/api/search', (req, res) => {
       });
     }
 
+    // Get full token with value for masking (if it has one)
+    const fullToken = token.hasValue ? db.getById(token.id) : token;
+    
     res.json({ 
       success: true, 
       found: true, 
       token: {
         ...token,
-        maskedValue: token.value ? maskValue(token.value) : null,
+        maskedValue: fullToken.value ? maskValue(fullToken.value) : null,
         value: undefined,
-        hasValue: !!token.value
+        hasValue: token.hasValue !== undefined ? token.hasValue : !!fullToken.value
       }
     });
   } catch (err) {
