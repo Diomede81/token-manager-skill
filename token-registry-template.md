@@ -48,3 +48,17 @@ When a token fails:
 
 **Maintained by:** Your agent name  
 **Review Frequency:** Weekly (check status of critical tokens)
+
+---
+
+## Token Registry Updated
+**Last Updated:** 2026-03-20
+
+### GitHub
+- **Status:** ✅ Available
+- **Location:** `~/.secrets/github-token.txt` (plaintext) AND `~/.secrets/github-token.txt.age` (encrypted)
+- **Token Type:** Personal Access Token (classic)
+- **Scopes:** repo, workflow, admin:org
+- **Purpose:** Create PRs, manage repositories, GitHub API operations
+- **Last Verified:** 2026-03-20
+- **Notes:** Stored both plaintext and encrypted via age
