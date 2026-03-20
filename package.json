@@ -1,0 +1,31 @@
+{
+  "name": "@openclaw/token-manager",
+  "version": "1.0.0",
+  "description": "Centralized API token registry and lookup system for OpenClaw agents",
+  "main": "check-token.js",
+  "keywords": [
+    "openclaw",
+    "agent-skill",
+    "api-tokens",
+    "credentials",
+    "token-management"
+  ],
+  "author": "Max Ferretti <max@tulip-tech.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Diomede81/token-manager-skill.git"
+  },
+  "clawhub": {
+    "type": "skill",
+    "category": "productivity",
+    "compatibility": ["all"],
+    "setup": "Copy token-registry-template.md to token-registry.md and customize for your agent"
+  },
+  "scripts": {
+    "check": "node check-token.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
