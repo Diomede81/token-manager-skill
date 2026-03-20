@@ -13,6 +13,18 @@
       "lastVerified": "2026-03-20T11:37:41.938Z",
       "status": "valid",
       "updatedAt": "2026-03-20T11:37:41.938Z"
+    },
+    {
+      "id": "4e1e303e",
+      "service": "Windsor",
+      "name": "WINDSOR_API_KEY",
+      "category": "api",
+      "locationType": "file",
+      "location": "~/.secrets/windsor-api-key.txt",
+      "scope": "Windsor API",
+      "createdAt": "2026-03-20T12:19:15.754Z",
+      "lastVerified": "2026-03-20T12:19:21.678Z",
+      "status": "valid"
     }
   ],
   "categories": [

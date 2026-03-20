@@ -8,11 +8,18 @@
     "verify": "node scripts/verify-tokens.js",
     "search": "node scripts/check-token.js"
   },
-  "keywords": ["openclaw", "skill", "tokens", "credentials", "registry"],
+  "keywords": [
+    "openclaw",
+    "skill",
+    "tokens",
+    "credentials",
+    "registry"
+  ],
   "author": "Tuliptech",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5"
+    "better-sqlite3": "^12.8.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
   }
 }
