@@ -62,3 +62,8 @@ When a token fails:
 - **Purpose:** Create PRs, manage repositories, GitHub API operations
 - **Last Verified:** 2026-03-20
 - **Notes:** Stored both plaintext and encrypted via age
+
+---
+**Token updated:** 2026-03-20
+**GitHub repo:** https://github.com/Diomede81/token-manager-skill
+**Status:** ✅ Live and published
