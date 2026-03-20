@@ -339,6 +339,38 @@ app.get('/api/lookup/:name', (req, res) => {
   }
 });
 
+// ============== SETUP INSTRUCTIONS ==============
+
+// GET /api/setup - Return setup instructions for agent
+app.get('/api/setup', (req, res) => {
+  const fs = require('fs');
+  const path = require('path');
+  const setupPath = path.join(__dirname, '..', 'docs', 'AGENT_SETUP.md');
+  
+  try {
+    const markdown = fs.readFileSync(setupPath, 'utf8');
+    const tokens = db.getAll();
+    
+    res.json({
+      instructions: markdown,
+      currentStatus: {
+        serviceRunning: true,
+        databaseConnected: true,
+        tokenCount: tokens.length,
+        tokensWithValues: tokens.filter(t => t.hasValue).length
+      },
+      quickStart: {
+        step1: 'Verify service is running via /api/status',
+        step2: 'Register tokens via POST /api/tokens',
+        step3: 'Search tokens via GET /api/search?q=ServiceName',
+        step4: 'Retrieve values via GET /api/tokens/:id/value'
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Setup instructions not found', details: error.message });
+  }
+});
+
 // ============== STATUS ==============
 
 // GET /api/status
@@ -422,6 +454,7 @@ app.listen(PORT, () => {
   console.log(`   Tokens: http://localhost:${PORT}/api/tokens`);
   console.log(`   Search: http://localhost:${PORT}/api/search?q=github`);
   console.log(`   Lookup: http://localhost:${PORT}/api/lookup/OPENAI_API_KEY`);
+  console.log(`   Setup:  http://localhost:${PORT}/api/setup`);
 });
 
 // Graceful shutdown
