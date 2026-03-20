@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "tokens": [
+    {
+      "id": "91570504",
+      "service": "GitHub",
+      "name": "Personal Access Token",
+      "category": "api",
+      "locationType": "file",
+      "location": "~/.secrets/github-token.txt",
+      "scope": "repo, read:org",
+      "createdAt": "2026-03-20T11:37:37.502Z",
+      "lastVerified": "2026-03-20T11:37:41.938Z",
+      "status": "valid",
+      "updatedAt": "2026-03-20T11:37:41.938Z"
+    }
+  ],
+  "categories": [
+    "api",
+    "oauth",
+    "webhook",
+    "database",
+    "other"
+  ]
+}
