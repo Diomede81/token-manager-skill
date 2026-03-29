@@ -22,17 +22,43 @@ The registry stores **metadata only** (service name, location, status). Actual s
 
 ## Quick Start
 
+### Option A: PM2 (Always-Alive - Recommended)
+
 ```bash
 # Install dependencies
 npm install
 
-# Start API server
+# Install as PM2-managed service (survives reboots)
+sudo bash scripts/install-pm2.sh
+
+# Check status
+pm2 status token-manager
+
+# View logs
+pm2 logs token-manager
+```
+
+**Benefits:**
+- ✅ Auto-restarts on crash
+- ✅ Survives system reboots
+- ✅ Process monitoring
+- ✅ Log management
+
+### Option B: Manual Start (Development)
+
+```bash
+# Install dependencies
+npm install
+
+# Start API server (foreground)
 npm start
 # → http://localhost:3021
 
 # Search for a token (CLI)
 npm run search github
 ```
+
+**Use this for:** Testing, development, debugging
 
 ## API Endpoints
 
@@ -144,16 +170,21 @@ Add custom categories via `POST /api/categories`.
 
 ```
 token-manager-skill/
-├── SKILL.md              # This file
-├── package.json          # Dependencies
+├── SKILL.md                # This file
+├── package.json            # Dependencies
+├── ecosystem.config.js     # PM2 configuration
 ├── config/
-│   └── registry.json     # Token registry
+│   └── registry.json       # Token registry
 ├── scripts/
-│   ├── server.js         # API server
-│   ├── check-token.js    # CLI search
-│   └── verify-tokens.js  # CLI verify all
-└── lib/
-    └── registry-manager.js # Registry CRUD
+│   ├── server.js           # API server
+│   ├── install-pm2.sh      # PM2 installer
+│   ├── check-token.js      # CLI search
+│   └── verify-tokens.js    # CLI verify all
+├── lib/
+│   └── registry-manager.js # Registry CRUD
+└── logs/
+    ├── pm2-out.log         # PM2 output logs
+    └── pm2-error.log       # PM2 error logs
 ```
 
 ## Environment Variables
@@ -162,6 +193,70 @@ token-manager-skill/
 |----------|---------|-------------|
 | PORT | 3021 | API server port |
 | CONFIG_DIR | ./config | Registry storage |
+
+## PM2 Management
+
+### Installation
+
+```bash
+# One-time setup (as root/sudo)
+sudo bash scripts/install-pm2.sh
+```
+
+This script:
+1. Installs PM2 globally (if needed)
+2. Starts token-manager
+3. Saves PM2 process list
+4. Configures systemd startup script
+5. Survives container/host restarts
+
+### Commands
+
+```bash
+# Status
+pm2 status token-manager
+pm2 logs token-manager --lines 50
+
+# Control
+pm2 restart token-manager
+pm2 stop token-manager
+pm2 start token-manager
+
+# Monitoring
+pm2 monit                # Live dashboard
+pm2 info token-manager   # Detailed info
+
+# Logs
+pm2 logs token-manager               # Stream logs
+pm2 logs token-manager --err         # Error logs only
+pm2 flush token-manager              # Clear logs
+```
+
+### Troubleshooting
+
+**Service not starting:**
+```bash
+# Check PM2 status
+pm2 status
+
+# View error logs
+pm2 logs token-manager --err --lines 100
+
+# Restart
+pm2 restart token-manager
+```
+
+**After system reboot:**
+```bash
+# PM2 should auto-start via systemd
+# Verify:
+pm2 status token-manager
+
+# If not running:
+pm2 resurrect  # Restore saved processes
+```
+
+---
 
 ## Integration
 
