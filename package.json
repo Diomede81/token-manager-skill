@@ -5,6 +5,11 @@
   "main": "scripts/server.js",
   "scripts": {
     "start": "node scripts/server.js",
+    "start:pm2": "pm2 start ecosystem.config.js",
+    "stop:pm2": "pm2 stop token-manager",
+    "restart:pm2": "pm2 restart token-manager",
+    "status:pm2": "pm2 status token-manager",
+    "logs:pm2": "pm2 logs token-manager",
     "verify": "node scripts/verify-tokens.js",
     "search": "node scripts/check-token.js"
   },
@@ -21,5 +26,8 @@
     "better-sqlite3": "^12.8.0",
     "cors": "^2.8.5",
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "pm2": "^5.4.3"
   }
 }

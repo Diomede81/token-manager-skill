@@ -30,6 +30,8 @@ A searchable registry of API tokens and credentials that prevents agents from in
 
 ## Quick Start
 
+### Production Setup (PM2 - Always Alive)
+
 ```bash
 # Clone
 git clone https://github.com/Diomede81/token-manager-skill.git
@@ -38,7 +40,29 @@ cd token-manager-skill
 # Install
 npm install
 
-# Start API server
+# Start as always-alive service
+sudo bash scripts/install-pm2.sh
+# → http://localhost:3021
+
+# Check status
+pm2 status token-manager
+```
+
+**PM2 provides:**
+- ✅ Auto-restart on crash
+- ✅ Survives system reboots  
+- ✅ Process monitoring
+- ✅ Log management
+
+See [docs/PM2_SETUP.md](docs/PM2_SETUP.md) for details.
+
+### Development Setup (Manual)
+
+```bash
+# Install
+npm install
+
+# Start (foreground)
 npm start
 # → http://localhost:3021
 ```
